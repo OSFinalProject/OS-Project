@@ -1,8 +1,10 @@
 #include <iostream>
 
-int main(){
-    std::cout << "Hello Carson!" << "\n";
-    std::cout << "Hello isha!" << "\n";
+using namespace std;
 
+int main(){
+    cout << "Hello Carson!" << "\n";
+    cout << "Hello Isha!" << "\n";
+    cout << "Hello Kaitlyn!" << "\n";
     return 0;
 }
