@@ -1,0 +1,26 @@
+Your Name Here: Title of what you just did
+
+Brief Summary:
+Write a more in-depth summary of what you just added and why.
+
+Time Spent:
+time in hours (#.# Hours)
+
+Additional Notes (optional):
+Sometimes write what you learned, issue you had, or a concern that might come up.
+
+
+
+
+----------------- Example down below -----------------
+
+Carson Spaniel: Created template for commits
+
+Brief Summary:
+I created a template to make our commits look more uniform and make the project managers job much easier for weekly reports.
+
+Time Spent:
+0.5 Hours
+
+Additional Notes:
+I am writing this with the future in mind. I want everyone in the group to adhere to this group standard.
