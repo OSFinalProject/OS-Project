@@ -11,4 +11,4 @@ Write a more in-depth summary of what you just added and why.
 time in hours (#.# Hours)
 
 #### Additional Notes (optional):
-Sometimes write what you learned, issue you had, or a concern that might come up.
+Sometimes write what you learned, issue you had, or a concern that might come up. If someone helps you, you should write them in the additional notes.
