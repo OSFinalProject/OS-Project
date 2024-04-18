@@ -7,7 +7,7 @@ Date : 04/18/2024
 Version : 1.1
 Usage : Compile and run this program using the GNU C++ compiler
 Notes : Run chmod +x * in order to apply permissions.
-C++ Version : Unknown
+C++ Version : Version 11
 =============================================================================
 */
 
