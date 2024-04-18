@@ -1,10 +1,10 @@
 /*
 =============================================================================
-Title : client.cpp
+Title : api.cpp
 Description : This file performs GET and PUT API methods to a localhost. It then prints the response.
 Author : Carson Spaniel (R#11712895)
-Date : 02/29/2024
-Version : 1.0
+Date : 04/18/2024
+Version : 1.1
 Usage : Compile and run this program using the GNU C++ compiler
 Notes : Run chmod +x * in order to apply permissions.
 C++ Version : Unknown
@@ -19,7 +19,7 @@ static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *use
   return size * nmemb;
 }
 
-void send_put(std::string endpoint, std::string apiData) {
+void send_put(std::string endpoint) {
   /*
 	description: Function to perform PUT requests.
 	Params:
@@ -37,9 +37,6 @@ void send_put(std::string endpoint, std::string apiData) {
   if (curl) {
     struct curl_slist *headers = NULL;
 
-    // Set the request data to the integer value
-    // std::string data = apiData;
-
     // Initalize the headers for PUT request
     headers = curl_slist_append(headers, "Content-Type: application/json");
 
@@ -50,7 +47,6 @@ void send_put(std::string endpoint, std::string apiData) {
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
     curl_easy_setopt(curl, CURLOPT_URL, fullEndpoint.c_str());
     curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "PUT");
-    // curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data.c_str());
 
     // Perform the PUT request
     CURLcode res = curl_easy_perform(curl);
@@ -103,37 +99,10 @@ std::string send_get(std::string endpoint) {
 
     // Cleanup the curl handle
     curl_easy_cleanup(curl);
-
-    // Print the response body
-    std::cout <<  buffer << std::endl;
   }
 
   // Cleanup libcurl
   curl_global_cleanup();
 
   return buffer;
-}
-
-int main() {
-  // Print Name and R#
-  std::cout << "Carson Spaniel\n";
-  std::cout << "R11712895\n";
-
-  // Perform PUT requests
-  send_put("initialize","3360");
-  send_put("modify","4");
-
-  // Perform GET requests and store the output
-  std::string initInt = send_get("initialize");
-  std::string modInt = send_get("modify");
-
-  // Perform PUT requests with new values
-  send_put("initialize",modInt);
-  send_put("modify",initInt);
-
-  // Perform new GET requests
-  std::string newInit = send_get("initialize");
-  std::string newMod = send_get("modify");
-  
-  return 0;
 }
