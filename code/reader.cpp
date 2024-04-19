@@ -17,19 +17,24 @@ C++ Version : Version 11
 #include <thread>
 #include <fstream>
 #include <mutex>
+#include <queue>
 #include "api.cpp"
 
 using namespace std;
 mutex mtx;
 
+// vector<Person> people;
 
 // Struct to represent a person
 struct Person {
     string name;
     int start;
     int end;
+    // int arrival;
     int wait;
 };
+
+queue<Person> peopleBuffer;
 
 // Struct to represent an elevator
 struct Elevator {
@@ -82,9 +87,12 @@ Person cleanPerson(string input){
 
     getline(iss, person.name, '|');
     iss >> person.start;
+    iss.ignore(1);
     iss >> person.end;
     person.wait = 0;
+    // person.arrival = datetime   
 
+    cout << "Parsed person: " << person.name << ", Start: " << person.start << ", End: " << person.end << ", Wait: " << person.wait << "\n" <<endl; // Test line
     return person;
 }
 
@@ -110,16 +118,11 @@ Elevator elevatorStatusCheck(Elevator elevator){
 }
 
 // Reader thread function
-void readerThread(Elevator elevator) {
-    vector<Person> people;
-
+void readerThread() {
     while (true) {
-        // mtx.lock();
-
         // Read and process people data
         string peopleDataString = send_get("NextInput");
         if (peopleDataString == "NONE") {
-            // mtx.unlock();
             // No more people data, wait for a short period
             this_thread::sleep_for(chrono::milliseconds(100));
             continue;
@@ -129,15 +132,10 @@ void readerThread(Elevator elevator) {
         }
         cout << "Received people data: " << peopleDataString << endl; // Test line
         Person p = cleanPerson(peopleDataString);
-        cout << "Parsed person: " << p.name << ", Start: " << p.start << ", End: " << p.end << endl; // Test line
-        people.push_back(p);
 
-        elevator = elevatorStatusCheck(elevator);
+        mtx.lock();
+        peopleBuffer.push(p);
+        mtx.unlock();
     }
 }
 
-// int main(){
-//     cleanElevator("A|1|U|2|8");
-//     cleanElevator("B\t2\tD\t3\t6");
-//     cleanPerson("Eric_R|1|2");
-// }

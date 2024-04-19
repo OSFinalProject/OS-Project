@@ -10,20 +10,23 @@ int main(int argc, char* argv[]){
     chrono::milliseconds(100);
     cout << "\n";
 
-    // void(argc);
     string buildingInput = argv[1];
-
-    // New below here
     vector<Elevator> elevators = readElevators(buildingInput);
-    for(Elevator elevator : elevators){
-        thread reader(readerThread, elevator);
-        // thread scheduler(schedulerThread);
-        // thread output(outputThread);
+    vector<thread> readerThreads;
 
-        reader.join();
-        // scheduler.join();
-        // output.join();
-    }
+    
+
+    thread peopleReader(readerThread);
+    peopleReader.join();
+
+    // for(Elevator& elevator : elevators){
+    //     readerThreads.emplace_back(readerThread);
+    // }
+
+    // // Wait for all reader threads to finish
+    // for(auto& thread : readerThreads){
+    //     thread.join();
+    // }
 
     send_put("Simulation/stop");
     cout << "\n";

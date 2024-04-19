@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/carso/Github/OS-Project",
-      "program": "c:/Users/carso/Github/OS-Project/build/Debug/outDebug",
+      "cwd": "c:/Users/carso/Github/OS-Final-Project-Folder/OS-Project/code",
+      "program": "c:/Users/carso/Github/OS-Final-Project-Folder/OS-Project/code/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
