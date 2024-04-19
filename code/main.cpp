@@ -1,7 +1,6 @@
 #include <iostream>
 #include <thread>
 #include "reader.cpp"
-#include "api.cpp"
 
 using namespace std;
 
@@ -9,13 +8,14 @@ int main(int argc, char* argv[]){
     cout << "\n\nStarting Simulation" << "\n";
     send_put("Simulation/start");
     chrono::milliseconds(100);
+    cout << "\n";
 
-    void(argc);
+    // void(argc);
     string buildingInput = argv[1];
 
     // New below here
     vector<Elevator> elevators = readElevators(buildingInput);
-    for(elevator : elevators){
+    for(Elevator elevator : elevators){
         thread reader(readerThread, elevator);
         // thread scheduler(schedulerThread);
         // thread output(outputThread);
@@ -25,7 +25,8 @@ int main(int argc, char* argv[]){
         // output.join();
     }
 
-    // send_put("Simulation/stop");
+    send_put("Simulation/stop");
+    cout << "\n";
     return 0;
 }
 

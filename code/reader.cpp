@@ -17,12 +17,10 @@ C++ Version : Version 11
 #include <thread>
 #include <fstream>
 #include <mutex>
-#include <queue>
 #include "api.cpp"
 
 using namespace std;
 mutex mtx;
-queue<BufferEntry> buffer;
 
 
 // Struct to represent a person
@@ -36,11 +34,80 @@ struct Person {
 // Struct to represent an elevator
 struct Elevator {
     string id;
+    int lowestFloor;
+    int highestFloor;
     int currentFloor;
     string direction;
     int passengerCount;
     int remainingCapacity;
+    int totalCapacity;
 };
+
+Elevator cleanElevatorStatus(string input){
+    for(int i=0;i<input.length();i++){
+        if(int(input[i]) == 9){
+            input[i] = '|';
+        }
+    }
+
+    cout << input << "\n";
+    istringstream iss(input);
+    Elevator elevator;
+
+    getline(iss, elevator.id, '|');
+    iss >> elevator.currentFloor;
+    getline(iss, elevator.direction, '|');
+    iss >> elevator.passengerCount;
+    iss >> elevator.remainingCapacity;
+
+    return elevator;
+}
+
+Elevator cleanBldgElevator(string input){
+    istringstream iss(input);
+    Elevator elevator;
+
+    getline(iss, elevator.id, '\t');
+    iss >> elevator.lowestFloor;
+    iss >> elevator.highestFloor;
+    iss >> elevator.currentFloor;
+    iss >> elevator.totalCapacity;
+
+    return elevator;
+}
+
+Person cleanPerson(string input){
+    istringstream iss(input);
+    Person person;
+
+    getline(iss, person.name, '|');
+    iss >> person.start;
+    iss >> person.end;
+    person.wait = 0;
+
+    return person;
+}
+
+vector<Elevator> readElevators(const string& inputFile){
+    vector<Elevator> elevators;
+    fstream input(inputFile);
+    string line;
+
+    while(getline(input, line)){
+        Elevator elevator = cleanBldgElevator(line);
+        elevators.push_back(elevator);
+        cout << "Processed elevator: " << elevator.id << ", Lowest Floor: " << elevator.lowestFloor << ", Highest Floor: " << elevator.highestFloor << ", Current Floor: " << elevator.currentFloor << ", Total Capacity: " << elevator.totalCapacity << endl; // Test line
+    }
+    return elevators;
+}
+
+Elevator elevatorStatusCheck(Elevator elevator){
+    // Read and process elevator data
+    string elevatorDataString = send_get("ElevatorStatus/" + elevator.id);
+    cout << "Received elevator data: " << elevatorDataString << endl; // Test line
+    elevator = cleanElevatorStatus(elevatorDataString);
+    return elevator;
+}
 
 // Reader thread function
 void readerThread(Elevator elevator) {
@@ -65,55 +132,8 @@ void readerThread(Elevator elevator) {
         cout << "Parsed person: " << p.name << ", Start: " << p.start << ", End: " << p.end << endl; // Test line
         people.push_back(p);
 
-        // Read and process elevator data
-        string elevatorDataString = send_get("ElevatorStatus/" + elevator.id);
-        cout << "Received elevator data: " << elevatorDataString << endl; // Test line
+        elevator = elevatorStatusCheck(elevator);
     }
-}
-
-vector<Elevator> readElevators(const string& inputFile){
-    vector<Elevator> elevators;
-    fstream input(inputFile);
-    string line;
-
-    while(getline(input, line)){
-        Elevator elevator = cleanElevator(line);
-        elevators.push_back(elevator);
-        cout << "Processed elevator: " << elevator.id << ", Floor: " << elevator.currentFloor << ", Direction: " << elevator.direction << ", Passengers: " << elevator.passengerCount << ", Remaining Capacity: " << elevator.remainingCapacity << endl; // Test line
-    }
-    return elevators;
-}
-
-Elevator cleanElevator(string input){
-    for(int i=0;i<input.length();i++){
-        if(int(input[i]) == 9){
-            input[i] = '|';
-        }
-    }
-
-    cout << input << "\n";
-    istringstream iss(input);
-    Elevator elevator;
-
-    getline(iss, elevator.id, '|');
-    iss >> elevator.currentFloor;
-    getline(iss, elevator.direction, '|');
-    iss >> elevator.passengerCount;
-    iss >> elevator.remainingCapacity;
-
-    return elevator;
-}
-
-Person cleanPerson(string input){
-    istringstream iss(input);
-    Person person;
-
-    getline(iss, person.name, '|');
-    iss >> person.start;
-    iss >> person.end;
-    person.wait = 0;
-
-    return person;
 }
 
 // int main(){
