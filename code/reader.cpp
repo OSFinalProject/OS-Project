@@ -23,8 +23,6 @@ C++ Version : Version 11
 using namespace std;
 mutex mtx;
 
-// vector<Person> people;
-
 // Struct to represent a person
 struct Person {
     string name;
@@ -34,6 +32,7 @@ struct Person {
     int wait;
 };
 
+// Buffer for people
 queue<Person> peopleBuffer;
 
 // Struct to represent an elevator
@@ -48,6 +47,10 @@ struct Elevator {
     int totalCapacity;
 };
 
+// Buffer for elevator
+queue<Elevator> elevatorBuffer;
+
+// Function to clear elevator status data from API
 Elevator cleanElevatorStatus(string input){
     for(int i=0;i<input.length();i++){
         if(int(input[i]) == 9){
@@ -68,6 +71,7 @@ Elevator cleanElevatorStatus(string input){
     return elevator;
 }
 
+// Function to clean .bdlg file data
 Elevator cleanBldgElevator(string input){
     istringstream iss(input);
     Elevator elevator;
@@ -81,6 +85,7 @@ Elevator cleanBldgElevator(string input){
     return elevator;
 }
 
+// Function to clean the people data
 Person cleanPerson(string input){
     istringstream iss(input);
     Person person;
@@ -96,25 +101,39 @@ Person cleanPerson(string input){
     return person;
 }
 
-vector<Elevator> readElevators(const string& inputFile){
-    vector<Elevator> elevators;
+// Function to read elevator data
+void readElevators(const string& inputFile){
     fstream input(inputFile);
     string line;
 
     while(getline(input, line)){
         Elevator elevator = cleanBldgElevator(line);
-        elevators.push_back(elevator);
+        elevatorBuffer.push(elevator);
         cout << "Processed elevator: " << elevator.id << ", Lowest Floor: " << elevator.lowestFloor << ", Highest Floor: " << elevator.highestFloor << ", Current Floor: " << elevator.currentFloor << ", Total Capacity: " << elevator.totalCapacity << endl; // Test line
     }
-    return elevators;
 }
 
-Elevator elevatorStatusCheck(Elevator elevator){
+// Function to get elevator status
+void elevatorStatusCheck(Elevator elevator){
     // Read and process elevator data
     string elevatorDataString = send_get("ElevatorStatus/" + elevator.id);
+    if(elevatorDataString == "Simulation is not running."){
+        return;
+    }
     cout << "Received elevator data: " << elevatorDataString << endl; // Test line
     elevator = cleanElevatorStatus(elevatorDataString);
-    return elevator;
+    elevatorBuffer.push(elevator);
+}
+
+// Constantly checking elevator status
+void elevatorLoop(const string& buildingInput){
+    readElevators(buildingInput);
+
+    while(!elevatorBuffer.empty()){
+        Elevator elevator = elevatorBuffer.front();
+        elevatorBuffer.pop();
+        elevatorStatusCheck(elevator);
+    }
 }
 
 // Reader thread function
