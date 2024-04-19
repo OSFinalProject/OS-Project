@@ -53,7 +53,6 @@ void readerThread(Elevator elevator) {
         string peopleDataString = send_get("NextInput");
         if (peopleDataString == "NONE") {
             // mtx.unlock();
-
             // No more people data, wait for a short period
             this_thread::sleep_for(chrono::milliseconds(100));
             continue;
