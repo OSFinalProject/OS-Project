@@ -1,7 +1,15 @@
-#include <iostream>
-#include <queue>
-
-using namespace std;
+/*
+=============================================================================
+Title : reader.cpp
+Description : This file contains the struct for elevator and people along with their buffers
+Author : Kaitlyn Urano (R#11555972)
+Date : 04/20/2024
+Version : 1.0
+Usage : Compile and run this program using the GNU C++ compiler
+Notes : Run chmod +x * in order to apply permissions.
+C++ Version : Version 11
+=============================================================================
+*/
 
 mutex peopleMtx;
 mutex elevatorMtx;
@@ -11,12 +19,12 @@ struct Person {
     string name;
     int start;
     int end;
-    // int arrival;
+    int arrival;
     int wait;
 };
 
 // Buffer for people
-queue<Person> peopleBuffer;
+vector<Person> peopleBuffer;
 
 // Struct to represent an elevator
 struct Elevator {
@@ -31,4 +39,4 @@ struct Elevator {
 };
 
 // Buffer for elevator
-queue<Elevator> elevatorBuffer;
+vector<Elevator> elevatorBuffer;

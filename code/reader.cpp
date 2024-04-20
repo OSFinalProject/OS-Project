@@ -10,27 +10,8 @@ Notes : Run chmod +x * in order to apply permissions.
 C++ Version : Version 11
 =============================================================================
 */
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <thread>
-#include <fstream>
-#include <mutex>
-#include "api.cpp"
-#include "struct.cpp"
-
-using namespace std;
-
-
 // Function to clear elevator status data from API
 Elevator cleanElevatorStatus(string input){
-    for(int i=0;i<input.length();i++){
-        if(int(input[i]) == 9){
-            input[i] = '|';
-        }
-    }
-
-    // cout << input << "\n";
     istringstream iss(input);
     Elevator elevator;
 
@@ -67,9 +48,7 @@ Person cleanPerson(string input){
     iss.ignore(1);
     iss >> person.end;
     person.wait = 0;
-    // person.arrival = datetime   
 
-    // cout << "Parsed person: " << person.name << ", Start: " << person.start << ", End: " << person.end << ", Wait: " << person.wait << "\n" <<endl; // Test line
     return person;
 }
 
@@ -81,9 +60,8 @@ void readElevators(const string& inputFile){
     while(getline(input, line)){
         Elevator elevator = cleanBldgElevator(line);
         elevatorMtx.lock();
-        elevatorBuffer.push(elevator);
+        elevatorBuffer.push_back(elevator);
         elevatorMtx.unlock();
-        // cout << "Processed elevator: " << elevator.id << ", Lowest Floor: " << elevator.lowestFloor << ", Highest Floor: " << elevator.highestFloor << ", Current Floor: " << elevator.currentFloor << ", Total Capacity: " << elevator.totalCapacity << endl; // Test line
     }
 }
 
@@ -94,11 +72,10 @@ void elevatorStatusCheck(Elevator elevator){
     if(elevatorDataString == "Simulation is not running."){
         return;
     }
-    // cout << "Received elevator data: " << elevatorDataString << endl; // Test line
     // Cleaning the status data when it is retrieved 
     elevator = cleanElevatorStatus(elevatorDataString);
     elevatorMtx.lock();
-    elevatorBuffer.push(elevator); // adding elevator to the buffer
+    elevatorBuffer.push_back(elevator); // adding elevator to the buffer
     elevatorMtx.unlock();
 }
 
@@ -111,7 +88,7 @@ void elevatorLoop(const string& buildingInput){
     while(!elevatorBuffer.empty()){
         elevatorMtx.lock();
         Elevator elevator = elevatorBuffer.front();
-        elevatorBuffer.pop();
+        elevatorBuffer.erase(elevatorBuffer.begin());
         elevatorMtx.unlock();
         elevatorStatusCheck(elevator);
     }
@@ -131,11 +108,10 @@ void readerThread() {
         else if (peopleDataString == "Simulation is not running."){
             break;
         }
-        // cout << "Received people data: " << peopleDataString << endl; // Test line
         Person p = cleanPerson(peopleDataString);
 
         peopleMtx.lock();
-        peopleBuffer.push(p);
+        peopleBuffer.push_back(p);
         peopleMtx.unlock();
     }
 }
