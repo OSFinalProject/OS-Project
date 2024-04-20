@@ -1,0 +1,40 @@
+people - name start end 'wait' 'arrival'
+elevator - id low high current cap
+
+reader thread will read all people coming in, clean the data, and store in struct, keep track of arrival time, store struct in a queue/file
+
+pop first person from the queue/file and match it to an elevator 
+
+for scheduler - edge cases: top floor and bottom floor
+
+detects me waiting for elevator, grab my current floor, end floor
+
+scheduler will check where all elevators (having capacity) are,
+check where I want to go: up or down
+
+if I want to go down, look at all elevators that are either above my level or at my level
+ then check if the elevator original direction is also 'down' or 'stationary'
+    if it is coming down - 
+        loop and store the one which is closest to me
+
+if I want to go up, look at all elevators that are either below my level or at my level
+ then check if the elevator original direction is also 'up' or 'stationary'
+    if it is coming up-
+     loop store the one which is closest to me
+
+update the elevator struct of the selected elevator
+
+put the person on the selected elevator - (if person next in line at the current floor also wants to go in the same direction, put them on - loop)
+
+elevator goes in the original direction till it reaches the top floor, then the direction is flipped
+for every floor that the elevator will stop at - if people removed (update capacity), check if anyone is waiting and wants to go in the same direction, if yes put them on if we have capacity
+when it reaches the top, everyone should have left the elevator and it should be empty - check this
+
+loop
+
+OS does this:
+
+keeps track of who entered the elevator first
+
+stop at the floor where the person who entered first wants to go 
+
