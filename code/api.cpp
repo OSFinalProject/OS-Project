@@ -37,7 +37,7 @@ void send_put(std::string endpoint) {
   if (curl) {
     struct curl_slist *headers = NULL;
 
-    // Initalize the headers for PUT request
+    // Initialize the headers for PUT request
     headers = curl_slist_append(headers, "Content-Type: application/json");
 
     // Concatenate the full endpoint

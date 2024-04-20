@@ -1,6 +1,7 @@
 #include <iostream>
 #include <thread>
 #include "reader.cpp"
+#include "scheduler.cpp"
 
 using namespace std;
 
@@ -15,8 +16,14 @@ int main(int argc, char* argv[]){
     thread peopleReader(readerThread);
     thread elevatorStatus(elevatorLoop, buildingInput);
 
+    chrono::milliseconds(500);
+    thread schedulerThread(testPeople);
+    thread schedulerElevatorThread(testElevator);
+
     peopleReader.join();
     elevatorStatus.join();
+    schedulerThread.join();
+    schedulerElevatorThread.join();
     
 
     send_put("Simulation/stop");
