@@ -1,21 +1,24 @@
 # OS-Project
 
-## Using Highest Response Ratio Next Scheduling Algorithm
-### Why Choose HRRN?
-Several factors influenced the decision to adopt the HRRN algorithm for this project:
+## Using SCAN Scheduling Algorithm
+### Why Choose SCAN?
+Several factors influenced the decision to adopt the SCAN algorithm for this project:
 
-1. Optimal Resource Utilization: HRRN dynamically adjusts task priorities based on their wait times, leading to balanced resource utilization and preventing tasks from monopolizing system resources.
+1. Predictable Performance: The SCAN algorithm provides predictable performance in elevator operations, making it easier to manage and maintain optimal service levels.
 
-2. Reduced Average Wait Time: By prioritizing tasks with longer wait times, HRRN minimizes average wait times for elevator passengers, enhancing user experience.
+2. Ease of Understanding: SCAN is a simple and easy-to-understand algorithm, which facilitates smoother implementation and maintenance of the elevator operating system.
 
-3. Adaptability: HRRN is adaptive and responsive to changing system conditions, ensuring that tasks with increasing wait times are serviced promptly, which is crucial in a dynamic elevator system environment.
-
-4. Fairness: The algorithm's prioritization strategy promotes fairness by preventing task starvation, thus ensuring that all elevator passengers are served in a timely manner.
+3. Starvation Risks: One significant advantage of the SCAN scheduling algorithm is its elimination of starvation risks. All passengers are serviced in a timely manner, ensuring fair and efficient elevator operations without any passengers being neglected.
 
 ### Potential Improvements and Optimization
-While HRRN is an effective scheduling algorithm, there are areas where further optimization and enhancements could be explored:
+While SCAN is an effective scheduling algorithm, there are areas where further optimization and enhancements could be explored:
 
-1. Fine-Tuning Response Ratios: Fine-tuning the calculation of response ratios, such as incorporating factors like elevator load and travel time, could enhance the algorithm's performance in specific elevator system configurations.
+1. Computational Complexity: As the number of elevators and floors increases, the computational complexity of the SCAN scheduling algorithm may become a bottleneck. This can impact system performance and response times, especially in larger buildings or during peak traffic periods.
+   
+3. Fairness Concerns: One drawback of the SCAN algorithm is its perceived lack of fairness, particularly in scenarios where floors experience long wait times after being visited. This can lead to dissatisfaction among passengers and may require additional strategies or adjustments to ensure fair and efficient elevator service.
+
+### Conclusion 
+In conclusion, despite the inherent pros and cons of the SCAN scheduling algorithm, it remains a superior choice compared to the round-robin scheduling algorithm. Our primary goal for this project is to implement a scheduling algorithm that optimizes elevator operations, and SCAN demonstrates significant advantages in efficiently handling passenger traffic, minimizing travel time, and providing predictable performance.
 
 ## Git Commit Template
 
