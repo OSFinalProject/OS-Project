@@ -35,8 +35,10 @@ int main(int argc, char* argv[]){
     send_put("Simulation/start");
     cout << "\n";
 
+    // To be able to read building data
     string buildingInput = argv[1];
 
+    // The four threads
     thread peopleReader(readerThread);
     thread elevatorStatus(elevatorLoop, buildingInput);
     thread schedulerThread(schedulerLoop);

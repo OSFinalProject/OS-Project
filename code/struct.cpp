@@ -1,7 +1,7 @@
 /*
 ======================================================================================================
 Title : struct.cpp
-Description : This file contains the struct for elevator and people. There is also a buffer for both 
+Description : This file contains the struct for elevator and people. There is also a buffer for both
     and a queue for the output data
 Author : Kaitlyn Urano (R#11555972)
 Date : 04/20/2024
@@ -12,12 +12,14 @@ C++ Version : Version 11
 =======================================================================================================
 */
 
+// Mutex locks for the buffers
 mutex peopleMtx;
 mutex elevatorMtx;
 mutex outputMtx;
 
 // Struct to represent a person
-struct Person {
+struct Person
+{
     string name;
     int start;
     int end;
@@ -28,7 +30,8 @@ struct Person {
 vector<Person> peopleBuffer;
 
 // Struct to represent an elevator
-struct Elevator {
+struct Elevator
+{
     string id;
     int lowestFloor;
     int highestFloor;

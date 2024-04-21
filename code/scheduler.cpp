@@ -12,8 +12,10 @@ C++ Version : Version 11
 ===========================================================================================
 */
 // Function to get the next elevator
-Elevator getElevator(){
-    while(elevatorBuffer.empty()){
+Elevator getElevator()
+{
+    while (elevatorBuffer.empty())
+    {
         this_thread::sleep_for(chrono::milliseconds(100));
         continue;
     }
@@ -26,11 +28,13 @@ Elevator getElevator(){
 }
 
 // Function to group candidates together for elevator trips
-vector<Person> getGroup(Elevator selectedElevator){
+vector<Person> getGroup(Elevator selectedElevator)
+{
     // Vector to store group of candidates with similar trips
     vector<Person> group = {};
     // If there is enough remaining capacity for a group of people
-    if (selectedElevator.remainingCapacity > 2){
+    if (selectedElevator.remainingCapacity > 2)
+    {
         // Add selected person to the group
         peopleMtx.lock();
         Person selectedPerson = peopleBuffer.front();
@@ -40,15 +44,18 @@ vector<Person> getGroup(Elevator selectedElevator){
         group.push_back(selectedPerson);
         int peopleInGroup = 1;
 
-        // Check for all candidates in the peopleBuffer 
+        // Check for all candidates in the peopleBuffer
         int size = peopleBuffer.size();
-        for(int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++)
+        {
             Person candidate = peopleBuffer[i];
-            if (peopleInGroup >= selectedElevator.remainingCapacity){
+            if (peopleInGroup >= selectedElevator.remainingCapacity)
+            {
                 break;
             }
             // If candidate is going up and their trip is within range of the selectedPerson going up
-            if ((candidate.distance > 0 && selectedPerson.distance > 0) && (candidate.start >= selectedPerson.start && candidate.start <= selectedPerson.end && candidate.end <= selectedPerson.end && candidate.end >= selectedPerson.start)){
+            if ((candidate.distance > 0 && selectedPerson.distance > 0) && (candidate.start >= selectedPerson.start && candidate.start <= selectedPerson.end && candidate.end <= selectedPerson.end && candidate.end >= selectedPerson.start))
+            {
                 group.push_back(candidate);
                 peopleInGroup++;
                 // Remove the candidate from the peopleBuffer
@@ -59,7 +66,8 @@ vector<Person> getGroup(Elevator selectedElevator){
                 peopleMtx.unlock();
             }
             // If candidate is going down and their trip is within range of the selectedPerson going down
-            if ((candidate.distance < 0 && selectedPerson.distance < 0) && (candidate.start <= selectedPerson.start && candidate.start >= selectedPerson.end && candidate.end >= selectedPerson.end && candidate.end <= selectedPerson.start)){
+            if ((candidate.distance < 0 && selectedPerson.distance < 0) && (candidate.start <= selectedPerson.start && candidate.start >= selectedPerson.end && candidate.end >= selectedPerson.end && candidate.end <= selectedPerson.start))
+            {
                 group.push_back(candidate);
                 peopleInGroup++;
                 // Remove the candidate from the peopleBuffer
@@ -77,21 +85,26 @@ vector<Person> getGroup(Elevator selectedElevator){
 mutex coutMtx;
 
 // Function to sort people
-void schedulerLoop(){
-    while(true){
-        if(peopleBuffer.empty()){
+void schedulerLoop()
+{
+    while (true)
+    {
+        if (peopleBuffer.empty())
+        {
             this_thread::sleep_for(chrono::milliseconds(100));
             continue;
         }
-        else{
+        else
+        {
             Elevator elevator = getElevator();
             vector<Person> candidates = getGroup(elevator);
-            for (Person candidateToSend : candidates){
+            for (Person candidateToSend : candidates)
+            {
                 coutMtx.lock();
                 cout << "Adding " << candidateToSend.name << " to elevator " << elevator.id << "\n";
                 coutMtx.unlock();
                 outputMtx.lock();
-                outputBuffer.push("/AddPersonToElevator/"+candidateToSend.name+"/"+elevator.id);
+                outputBuffer.push("/AddPersonToElevator/" + candidateToSend.name + "/" + elevator.id);
                 outputMtx.unlock();
             }
         }
