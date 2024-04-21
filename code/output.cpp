@@ -12,6 +12,7 @@ C++ Version : Version 11
 */
 void outputLoop(){
     while(true){
+        // If buffer is empty, sleep
         if(outputBuffer.empty()){
             this_thread::sleep_for(chrono::milliseconds(100));
             continue;
