@@ -3,7 +3,7 @@
 Title : scheduler.cpp
 Description : This file contains the scheduler thread
 Author : Carson Spaniel (R#11712895), Travis Rose (R#11736997), Kaitlyn Urano (R#11555972),
-    Isha Koregave (R#11746130)
+    Isha Koregave (R#11743130)
 Date : 04/20/2024
 Version : 1.0
 Usage : Compile and run this program using the GNU C++ compiler

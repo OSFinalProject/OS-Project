@@ -31,19 +31,19 @@ TEST_CASE("Clean person data - Negative distance", "cleanPerson")
     std::string input = "Alice|5|2";
     Person result = cleanPerson(input);
     REQUIRE(result.name == "Alice");
-    REQUIRE(result.start == 2);
-    REQUIRE(result.end == 5);
+    REQUIRE(result.start == 5);
+    REQUIRE(result.end == 2);
     REQUIRE(result.distance == -3);
 }
 
 //TEST CASES FOR ELEVATOR STATUS THREAD BASE FUNCTIONS
 TEST_CASE("Clean elevator status - Valid input", "cleanElevatorStatus")
 {
-    std::string input = "Elevator1|5|UP|2|8";
+    std::string input = "Elevator1|5|U|2|8";
     Elevator result = cleanElevatorStatus(input);
     REQUIRE(result.id == "Elevator1");
     REQUIRE(result.currentFloor == 5);
-    REQUIRE(result.direction == "UP");
+    REQUIRE(result.direction == "U");
     REQUIRE(result.passengerCount == 2);
     REQUIRE(result.remainingCapacity == 8);
 }
@@ -55,7 +55,7 @@ TEST_CASE("Clean elevator status - Empty input", "cleanElevatorStatus")
    
 }
 
-TEST_CASE("Clean building elevator - Valid input", "[cleanBldgElevator]") {
+TEST_CASE("Clean building elevator - Valid input", "cleanBldgElevator") {
     std::string input = "Elevator1|1|10|5|8";
     Elevator result = cleanBldgElevator(input);
     
@@ -67,12 +67,12 @@ TEST_CASE("Clean building elevator - Valid input", "[cleanBldgElevator]") {
 }
 
 
-TEST_CASE("Get group of people for selected elevator - Valid input", "[getGroup]") {
+TEST_CASE("Get group of people for selected elevator - Valid input", "getGroup") {
  
     Elevator selectedElevator;
     selectedElevator.remainingCapacity = 3; // Assuming enough remaining capacity for a group of people
 
-    /
+    
     std::vector<Person> peopleBuffer = {
         {"Person1", 2, 5},  
         {"Person2", 3, 7},  
@@ -87,7 +87,7 @@ TEST_CASE("Get group of people for selected elevator - Valid input", "[getGroup]
     std::vector<Person> group = getGroup(selectedElevator);
 
 
-    REQUIRE(group.size() == 3); // Expecting three persons in the group
+    REQUIRE(group.size() == 3); // Expect three persons in the group
 
     // Verify the properties of the persons in the group
     REQUIRE(group[0].name == "Person1");
@@ -98,7 +98,7 @@ TEST_CASE("Get group of people for selected elevator - Valid input", "[getGroup]
 
 // SCHEDULER THREAD BASE FUNCTIONS
 TEST_CASE("Get next elevator - Elevator buffer not empty (2 elevators)", "[getElevator]") {
-    // Prepare a mock elevator buffer with two elevators
+    
     std::vector<Elevator> elevatorBuffer = {
         {"Elevator1", 1, 10, 5, 8}, 
         {"Elevator2", 2, 9, 6, 7}   
@@ -108,7 +108,7 @@ TEST_CASE("Get next elevator - Elevator buffer not empty (2 elevators)", "[getEl
     // Assign the mock elevator buffer to the global variable
     ::elevatorBuffer = elevatorBuffer;
 
-    // Call getElevator function twice to get two elevators
+  
     Elevator nextElevator1 = getElevator();
     Elevator nextElevator2 = getElevator();
 
