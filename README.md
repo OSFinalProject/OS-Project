@@ -1,24 +1,20 @@
 # OS-Project
 
-## Using SCAN Scheduling Algorithm
-### Why Choose SCAN?
-Several factors influenced the decision to adopt the SCAN algorithm for this project:
+## Using Modified Round-Robin Scheduling
+### Why Choose RR?
+Several factors influenced the decision to adopt the RR algorithm for this project:
 
-1. Predictable Performance: The SCAN algorithm provides predictable performance in elevator operations, making it easier to manage and maintain optimal service levels.
+1. Grouping: This modified version of round-robin groups people together based on the direction they are going rather than scheduling individual people.
 
-2. Ease of Understanding: SCAN is a simple and easy-to-understand algorithm, which facilitates smoother implementation and maintenance of the elevator operating system.
-
-3. Starvation Risks: One significant advantage of the SCAN scheduling algorithm is its elimination of starvation risks. All passengers are serviced in a timely manner, ensuring fair and efficient elevator operations without any passengers being neglected.
+2. Checks for space: The implementation of this algorithm works to check the remaining capacity of the elevator before assigning anyone.
 
 ### Potential Improvements and Optimization
-While SCAN is an effective scheduling algorithm, there are areas where further optimization and enhancements could be explored:
+While RR is an effective scheduling algorithm, there are areas where further optimization and enhancements could be explored:
 
-1. Computational Complexity: As the number of elevators and floors increases, the computational complexity of the SCAN scheduling algorithm may become a bottleneck. This can impact system performance and response times, especially in larger buildings or during peak traffic periods.
-   
-3. Fairness Concerns: One drawback of the SCAN algorithm is its perceived lack of fairness, particularly in scenarios where floors experience long wait times after being visited. This can lead to dissatisfaction among passengers and may require additional strategies or adjustments to ensure fair and efficient elevator service.
+1. Group dependency: The efficiency of the group travel will be dependent on the trip of the first person selected.
 
 ### Conclusion 
-In conclusion, despite the inherent pros and cons of the SCAN scheduling algorithm, it remains a superior choice compared to the round-robin scheduling algorithm. Our primary goal for this project is to implement a scheduling algorithm that optimizes elevator operations, and SCAN demonstrates significant advantages in efficiently handling passenger traffic, minimizing travel time, and providing predictable performance.
+In conclusion, despite the inherent pros and cons of the Modified RR scheduling algorithm, it remains a superior choice compared to the traditional round-robin scheduling algorithm. 
 
 ## Git Commit Template
 
