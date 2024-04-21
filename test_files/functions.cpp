@@ -2,7 +2,7 @@
 ============================================================================================
 Title : functions.cpp
 Description : This file contains functions seleceted for unit testing
-Author : Isha Koregave (R#11746130)
+Author : Isha Koregave (R#11743130)
 Date : 04/21/2024
 Version : 1.0
 Usage : Compile and run this program using the GNU C++ compiler
