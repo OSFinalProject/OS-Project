@@ -90,7 +90,7 @@ void elevatorLoop(const string& buildingInput){
         elevatorBuffer.erase(elevatorBuffer.begin());
         elevatorMtx.unlock();
         elevatorStatusCheck(elevator);
-        this_thread::sleep_for(chrono::milliseconds(500));
+        this_thread::sleep_for(chrono::milliseconds(100));
     }
 }
 

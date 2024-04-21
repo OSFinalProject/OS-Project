@@ -10,7 +10,6 @@ Notes : Run chmod +x * in order to apply permissions.
 C++ Version : Version 11
 ============================================================================================
 */
-
 #include <iostream>
 #include <thread>
 #include <mutex>
@@ -19,6 +18,7 @@ C++ Version : Version 11
 #include <fstream>
 #include <vector>
 #include <queue>
+#include <algorithm>
 
 using namespace std;
 
@@ -29,8 +29,6 @@ using namespace std;
 #include "output.cpp"
 
 int main(int argc, char* argv[]){
-    //const int catchResult = Catch::Session().run(argc, argv);  // Run Catch2 tests - PART OF UNIT TESTING
-
     cout << "\n\nStarting Simulation" << "\n";
     send_put("Simulation/start");
     cout << "\n";
@@ -46,19 +44,9 @@ int main(int argc, char* argv[]){
     elevatorStatus.join();
     schedulerThread.join();
     outputThread.join();
-    
 
     send_put("Simulation/stop");
     cout << "\n";
 
-
-    /*PART OF UNIT TESTING
-
-    std::cin.get();
-   
-    return retval;  //return result of Catch2 unit testing
-    */
     return 0;
-
-    
 }

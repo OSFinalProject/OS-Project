@@ -10,7 +10,6 @@ Notes : Run chmod +x * in order to apply permissions.
 C++ Version : Version 11
 ============================================================================================
 */
-
 void outputLoop(){
     while(true){
         if(outputBuffer.empty()){
