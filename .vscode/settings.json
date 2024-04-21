@@ -60,6 +60,7 @@
   "files.associations": {
     "*.py": "python",
     "iostream": "cpp",
-    "chrono": "cpp"
+    "chrono": "cpp",
+    "thread": "cpp"
   }
 }

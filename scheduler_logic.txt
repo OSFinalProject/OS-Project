@@ -7,15 +7,17 @@ pop first person from the queue/file and match it to an elevator
 
 for scheduler - edge cases: top floor and bottom floor
 
-detects me waiting for elevator, grab my current floor, end floor
+detect first person in the file/queue waiting for elevator, grab the current floor, end floor, and direction
+grab everyone in line with the same current floor and direction and group them
 
 scheduler will check where all elevators (having capacity) are,
-check where I want to go: up or down
 
-if I want to go down, look at all elevators that are either above my level or at my level
+
+if selected person want to go down, look at all elevators that are either above the persons level or at their level
  then check if the elevator original direction is also 'down' or 'stationary'
     if it is coming down - 
         loop and store the one which is closest to me
+          
 
 if I want to go up, look at all elevators that are either below my level or at my level
  then check if the elevator original direction is also 'up' or 'stationary'

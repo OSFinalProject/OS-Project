@@ -47,16 +47,16 @@ Person cleanPerson(string input){
     iss >> person.start;
     iss.ignore(1);
     iss >> person.end;
-    person.wait = 0;
-
+    person.distance = person.end - person.start;
     return person;
 }
 
-// Function to read elevator data
+// Function to read elevator data from .bldg file
 void readElevators(const string& inputFile){
     fstream input(inputFile);
     string line;
 
+    // process while there are lines to read
     while(getline(input, line)){
         Elevator elevator = cleanBldgElevator(line);
         elevatorMtx.lock();
@@ -65,7 +65,7 @@ void readElevators(const string& inputFile){
     }
 }
 
-// Function to get elevator status
+// Function to get elevator status from API
 void elevatorStatusCheck(Elevator elevator){
     // Read and process elevator data
     string elevatorDataString = send_get("ElevatorStatus/" + elevator.id);
@@ -79,11 +79,10 @@ void elevatorStatusCheck(Elevator elevator){
     elevatorMtx.unlock();
 }
 
-// Constantly checking elevator status
+// Loop to constantly check elevator status
 void elevatorLoop(const string& buildingInput){
     // Read in building information
     readElevators(buildingInput);
-
     // While there are elevators in the buffer, get status
     while(!elevatorBuffer.empty()){
         elevatorMtx.lock();
@@ -91,6 +90,7 @@ void elevatorLoop(const string& buildingInput){
         elevatorBuffer.erase(elevatorBuffer.begin());
         elevatorMtx.unlock();
         elevatorStatusCheck(elevator);
+        this_thread::sleep_for(chrono::milliseconds(500));
     }
 }
 
@@ -101,7 +101,7 @@ void readerThread() {
         string peopleDataString = send_get("NextInput");
         if (peopleDataString == "NONE") {
             // No more people data, wait for a short period
-            this_thread::sleep_for(chrono::milliseconds(100));
+            this_thread::sleep_for(chrono::milliseconds(500));
             continue;
         }
         // Breaks when simulation is not running
