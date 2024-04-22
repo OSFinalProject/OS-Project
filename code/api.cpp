@@ -52,7 +52,7 @@ void send_put(std::string endpoint) {
     CURLcode res = curl_easy_perform(curl);
 
     if (res != CURLE_OK) {
-      std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
+      cout << "Simulation done or canceled." << "\n";
     }
 
     // Cleanup the curl handle
@@ -94,7 +94,7 @@ std::string send_get(std::string endpoint) {
     CURLcode res = curl_easy_perform(curl);
 
     if (res != CURLE_OK) {
-      std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
+      buffer = "";
     }
 
     // Cleanup the curl handle

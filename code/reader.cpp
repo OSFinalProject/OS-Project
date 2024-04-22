@@ -10,20 +10,20 @@ Notes : Run chmod +x * in order to apply permissions.
 C++ Version : Version 11
 =============================================================================
 */
-// Function to clear elevator status data from API
-Elevator cleanElevatorStatus(string input)
-{
-    istringstream iss(input);
-    Elevator elevator;
+// // Function to clear elevator status data from API
+// Elevator cleanElevatorStatus(string input)
+// {
+//     istringstream iss(input);
+//     Elevator elevator;
 
-    getline(iss, elevator.id, '|');
-    iss >> elevator.currentFloor;
-    getline(iss, elevator.direction, '|');
-    iss >> elevator.passengerCount;
-    iss >> elevator.remainingCapacity;
+//     getline(iss, elevator.id, '|');
+//     iss >> elevator.currentFloor;
+//     getline(iss, elevator.direction, '|');
+//     iss >> elevator.passengerCount;
+//     iss >> elevator.remainingCapacity;
 
-    return elevator;
-}
+//     return elevator;
+// }
 
 // Function to clean .bdlg file data
 Elevator cleanBldgElevator(string input)
@@ -70,42 +70,43 @@ void readElevators(const string &inputFile)
     }
 }
 
-// Function to get elevator status from API
-void elevatorStatusCheck(Elevator elevator)
-{
-    // Read and process elevator data
-    string elevatorDataString = send_get("ElevatorStatus/" + elevator.id);
-    if (elevatorDataString == "Simulation is not running.")
-    {
-        return;
-    }
-    // Cleaning the status data when it is retrieved
-    elevator = cleanElevatorStatus(elevatorDataString);
-    elevatorMtx.lock();
-    elevatorBuffer.push_back(elevator); // adding elevator to the buffer
-    elevatorMtx.unlock();
-}
+// // Function to get elevator status from API
+// void elevatorStatusCheck(Elevator elevator)
+// {
+//     // Read and process elevator data
+//     string elevatorDataString = send_get("ElevatorStatus/" + elevator.id);
+//     if (elevatorDataString == "Simulation is not running.")
+//     {
+//         return;
+//     }
+//     // Cleaning the status data when it is retrieved
+//     elevator = cleanElevatorStatus(elevatorDataString);
+//     elevatorMtx.lock();
+//     elevatorBuffer.push_back(elevator); // adding elevator to the buffer
+//     elevatorMtx.unlock();
+// }
 
-// Loop to constantly check elevator status
-void elevatorLoop(const string &buildingInput)
-{
-    // Read in building information
-    readElevators(buildingInput);
-    // While there are elevators in the buffer, get status
-    while (!elevatorBuffer.empty())
-    {
-        elevatorMtx.lock();
-        Elevator elevator = elevatorBuffer.front();
-        elevatorBuffer.erase(elevatorBuffer.begin());
-        elevatorMtx.unlock();
-        elevatorStatusCheck(elevator); // get the status
-        this_thread::sleep_for(chrono::milliseconds(500));
-    }
-}
+// // Loop to constantly check elevator status
+// void elevatorLoop(const string &buildingInput)
+// {
+//     // Read in building information
+//     readElevators(buildingInput);
+//     // While there are elevators in the buffer, get status
+//     while (!elevatorBuffer.empty())
+//     {
+//         elevatorMtx.lock();
+//         Elevator elevator = elevatorBuffer.front();
+//         elevatorBuffer.erase(elevatorBuffer.begin());
+//         elevatorMtx.unlock();
+//         elevatorStatusCheck(elevator); // get the status
+//         this_thread::sleep_for(chrono::milliseconds(500));
+//     }
+// }
 
 // Reader thread function
-void readerThread()
+void readerThread(const string &buildingInput)
 {
+    readElevators(buildingInput);
     while (true)
     {
         // Read and process people data
@@ -117,8 +118,9 @@ void readerThread()
             continue;
         }
         // Breaks when simulation is not running
-        else if (peopleDataString == "Simulation is not running.")
+        else if (peopleDataString == "")
         {
+            done = true;
             break;
         }
         // Clean the data received

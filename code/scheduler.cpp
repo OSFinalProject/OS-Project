@@ -63,11 +63,9 @@ Person getNextPerson(){
     return nextPerson;
 }
 
-mutex coutMtx;
-
 // Function to sort people
 void schedulerLoop(){
-    while(true){
+    while(!done){
         if(peopleBuffer.empty() || elevatorBuffer.empty()){
             this_thread::sleep_for(chrono::milliseconds(100));
             continue;
@@ -75,10 +73,6 @@ void schedulerLoop(){
         else{
             Person person = getNextPerson();
             Elevator elevator = getNextElevator(person);
-
-            coutMtx.lock();
-            cout << "Adding " << person.name << " to elevator " << elevator.id << "\n";
-            coutMtx.unlock();
             
             outputMtx.lock();
             outputBuffer.push("/AddPersonToElevator/"+person.name+"/"+elevator.id);

@@ -22,14 +22,16 @@ C++ Version : Version 11
 
 using namespace std;
 
+bool done = false;
+
 #include "api.cpp"
 #include "struct.cpp"
 #include "reader.cpp"
 #include "scheduler.cpp"
 #include "output.cpp"
 
+
 int main(int argc, char* argv[]){
-    cout << "\n\nStarting Simulation" << "\n";
     send_put("Simulation/start");
     cout << "\n";
 
@@ -37,18 +39,15 @@ int main(int argc, char* argv[]){
     string buildingInput = argv[1];
 
     // The four threads
-    thread peopleReader(readerThread);
-    thread elevatorStatus(elevatorLoop, buildingInput);
+    thread peopleReader(readerThread, buildingInput);
+    // thread elevatorStatus(elevatorLoop, buildingInput);
     thread schedulerThread(schedulerLoop);
     thread outputThread(outputLoop);
 
     peopleReader.join();
-    elevatorStatus.join();
+    // elevatorStatus.join();
     schedulerThread.join();
     outputThread.join();
-
-    send_put("Simulation/stop");
-    cout << "\n";
 
     return 0;
 }
