@@ -69,7 +69,6 @@ std::string send_get(std::string endpoint) {
           - endpoint(string): contains a string for the endpoint that I want to hit
         returns: string of the integer from the response
   */
-  
 
   // Initialize libcurl
   curl_global_init(CURL_GLOBAL_ALL);

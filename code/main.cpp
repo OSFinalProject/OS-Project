@@ -30,7 +30,6 @@ bool done = false;
 #include "scheduler.cpp"
 #include "output.cpp"
 
-
 int main(int argc, char* argv[]){
     send_put("Simulation/start");
     cout << "\n";
@@ -38,14 +37,12 @@ int main(int argc, char* argv[]){
     // To be able to read building data
     string buildingInput = argv[1];
 
-    // The four threads
+    // The three threads
     thread peopleReader(readerThread, buildingInput);
-    // thread elevatorStatus(elevatorLoop, buildingInput);
     thread schedulerThread(schedulerLoop);
     thread outputThread(outputLoop);
 
     peopleReader.join();
-    // elevatorStatus.join();
     schedulerThread.join();
     outputThread.join();
 

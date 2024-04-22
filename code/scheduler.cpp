@@ -27,28 +27,6 @@ Elevator getNextElevator(Person person){
     return nextElevator;
 }
 
-// // Function to get the closest available elevator
-// Elevator getNextElevator(Person person){
-//     // Find the shortest process
-//     auto compare = [&](const auto &a, const auto &b) {
-//         // Check if there is capacity 
-//         if(a.remainingCapacity > 0 && b.remainingCapacity > 0){
-//             // Check if their travel is within range of the two compared elevators
-//             if ((person.distance > 0 && person.end <= a.highestFloor && person.end <= b.highestFloor) || (person.distance < 0 && person.start <= a.highestFloor && person.start <= b.highestFloor)){
-//                 return (abs(person.start - a.currentFloor) < abs(person.start - b.currentFloor));
-//             }
-//             // If it is only in range of A
-//             else if((person.distance > 0 && person.end <= a.highestFloor) || (person.distance < 0 && person.start <= a.highestFloor))
-//             {
-//                 return true;
-//             }
-//         }
-//         return false;
-//     };
-//     sort(elevatorBuffer.begin(), elevatorBuffer.end(), compare);
-//     return elevatorBuffer.front();
-// }
-
 // Function to get the next person using SPN
 Person getNextPerson(){
     // Find the shortest process
