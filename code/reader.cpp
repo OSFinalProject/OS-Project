@@ -42,7 +42,7 @@ Person cleanPerson(string input)
 // Function to read elevator data from .bldg file
 void readElevators(const string &inputFile)
 {
-    fstream input(inputFile);
+    ifstream input(inputFile);
     string line;
 
     // process while there are lines to read

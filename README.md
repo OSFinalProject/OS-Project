@@ -1,20 +1,21 @@
 # OS-Project
 
-## Using Modified Round-Robin Scheduling
-### Why Choose RR?
-Several factors influenced the decision to adopt the RR algorithm for this project:
+## Using Shortest Process Next Scheduling
+### Why Choose FCFS?
+Several factors influenced the decision to adopt the FCFS algorithm for this project:
 
-1. Grouping: This modified version of round-robin groups people together based on the direction they are going rather than scheduling individual people.
+1. Fairness: FCFS ensures fairness by servicing elevator requests in the order they are received. This prevents any request from being indefinitely delayed, promoting equal access to elevator services for all users.
+2. Simplicity: FCFS is straightforward to implement and understand. It does not require complex algorithms or data structures, making it easy to maintain and debug.
+3. Low Overhead: The FCFS algorithm has low computational overhead since it only requires tracking the order of incoming requests and servicing them sequentially.
+4. Predictable Behavior: Users can predict the behavior of the elevator system since requests are processed in a deterministic manner based on their arrival time.
 
-2. Checks for space: The implementation of this algorithm works to check the remaining capacity of the elevator before assigning anyone.
-
-### Potential Improvements and Optimization
-While RR is an effective scheduling algorithm, there are areas where further optimization and enhancements could be explored:
+### Potential Flaws
+While FCFS is an effective scheduling algorithm, there are areas where further optimization and enhancements could be explored:
 
 1. Group dependency: The efficiency of the group travel will be dependent on the trip of the first person selected.
 
 ### Conclusion 
-In conclusion, despite the inherent pros and cons of the Modified RR scheduling algorithm, it remains a superior choice compared to the traditional round-robin scheduling algorithm. 
+In conclusion, despite the inherent pros and cons of the FCFS scheduling algorithm, it remains a superior choice compared to the traditional round-robin scheduling algorithm. 
 
 ## Git Commit Template
 
