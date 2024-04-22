@@ -30,6 +30,7 @@ bool done = false;
 #include "scheduler.cpp"
 #include "output.cpp"
 
+// Driver code
 int main(int argc, char* argv[]){
     send_put("Simulation/start");
     cout << "\n";

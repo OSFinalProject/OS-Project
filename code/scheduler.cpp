@@ -20,6 +20,7 @@ Elevator getNextElevator(Person person){
         elevatorBuffer.erase(elevatorBuffer.begin());
         elevatorBuffer.push_back(nextElevator);
         elevatorMtx.unlock();
+        // If going up, make sure the elevator they get assigned to can travel to that floor. Same thing going down but make sure elevator can pick them up
         if ((person.distance > 0 && person.end <= nextElevator.highestFloor) || (person.distance < 0 && person.start <= nextElevator.highestFloor)){
             break;
         }
@@ -34,6 +35,7 @@ Person getNextPerson(){
         return (abs(a.distance) < abs(b.distance));
     };
     peopleMtx.lock();
+    // Sort by shortest process
     sort(peopleBuffer.begin(), peopleBuffer.end(), compare);
     Person nextPerson = peopleBuffer.front();
     peopleBuffer.erase(peopleBuffer.begin());

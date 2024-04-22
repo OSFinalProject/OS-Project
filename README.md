@@ -1,21 +1,29 @@
 # OS-Project
 
-## Using Shortest Process Next Scheduling
-### Why Choose FCFS?
-Several factors influenced the decision to adopt the FCFS algorithm for this project:
+## Using Combinational Scheduling: SPN for People & RR for Elevators
+### Why Choose SPN?
+SPN is a scheduling algorithm that prioritizes processes (in our case, passengers) based on their shortest travel distance. It is beneficial for our elevator OS due to the following reasons:
 
-1. Fairness: FCFS ensures fairness by servicing elevator requests in the order they are received. This prevents any request from being indefinitely delayed, promoting equal access to elevator services for all users.
-2. Simplicity: FCFS is straightforward to implement and understand. It does not require complex algorithms or data structures, making it easy to maintain and debug.
-3. Low Overhead: The FCFS algorithm has low computational overhead since it only requires tracking the order of incoming requests and servicing them sequentially.
-4. Predictable Behavior: Users can predict the behavior of the elevator system since requests are processed in a deterministic manner based on their arrival time.
+1. Efficiency: SPN optimizes elevator usage by prioritizing passengers with shorter travel distances, thereby reducing overall travel time. This is achieved because passengers with longer trips are less likely to encounter as many intermediate stops, as the smaller trips between floors have already been completed.
+
+2. Completes Entire Processes: SPN is an algorithm that completes entire processes without interruption by other processes. Therefore, there is less time required for elevator acceleration or deceleration.
+
+### Why choose RR?
+Round Robin is used for assigning passengers to available elevators in a cyclic manner. It offers several advantages in our elevator OS:
+
+1. Fair Allocation: Each elevator receives an equal share of passenger assignments, promoting fairness and equitable service across all elevators.
+
+2. Fault Tolerance: RR can handle unexpected failures or disruptions more effectively due to its cyclic assignment approach, ensuring continued operation even in challenging situations. If a person cannot get on an elevator, they are re-assigned. 
 
 ### Potential Flaws
-While FCFS is an effective scheduling algorithm, there are areas where further optimization and enhancements could be explored:
+While there are benefits to our scheduling algorithm, there are areas where further optimization and enhancements could be explored:
 
-1. Group dependency: The efficiency of the group travel will be dependent on the trip of the first person selected.
+1. Wait Time: Passengers with longer processes will be penalized with extended wait times before their process start.
+
+2. Capacity: In our current program version, we are not accounting for elevator capacity. While this is not a problem in the tests conducted for this assignment, it may become a concern in practical scenarios with heavier passenger loads.
 
 ### Conclusion 
-In conclusion, despite the inherent pros and cons of the FCFS scheduling algorithm, it remains a superior choice compared to the traditional round-robin scheduling algorithm. 
+In conclusion, our goal was to either surpass or match the performance time of Professor Rees's algorithm, and we have successfully achieved that with our program.
 
 ## Git Commit Template
 

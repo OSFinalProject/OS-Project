@@ -20,6 +20,7 @@ void outputLoop(){
         outputMtx.lock();
         string out = outputBuffer.front();
         outputBuffer.pop();
+        // If output is not blank, send it
         if (out != ""){
             send_put(out);
         }

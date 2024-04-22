@@ -35,7 +35,7 @@ Person cleanPerson(string input)
     iss >> person.start;
     iss.ignore(1);
     iss >> person.end;
-    person.distance = person.end - person.start;
+    person.distance = person.end - person.start; // calculates distance person has to travel
     return person;
 }
 
